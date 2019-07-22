@@ -342,6 +342,22 @@ RUN if [[ -n "${ADDITIONAL_PYTHON_DEPS}" ]]; then \
         pip install ${ADDITIONAL_PYTHON_DEPS}; \
     fi
 
+# Since we install vanilla Airflow, we also want to have support for Postgres and Kubernetes
+# RUN pip install -U setuptools && \
+#     pip install kubernetes && \
+#     pip install cryptography && \
+    # # pip install tornado>=4.2.0, <6.0 && \
+    # pip install celery~=4.3 && \
+    # # pip install flower>=0.7.3, <1.0 && \
+    # pip install librabbitmq>=1.6.1 && \
+    # # pip install boto3>=1.7.0, <1.8.0 && \
+    # pip install redis~=3.2 && \
+    # pip install cassandra-driver>=3.13.0 && \
+# RUN    pip install psycopg2-binary==2.7.4  # I had issues with older versions of psycopg2, just a warning
+# RUN pip install apache-airflow[celery,s3,redis,rabbitmq] && \
+#     pip install -U "Werkzeug>=0.15" && \
+#     pip install -U "alembic>=1.0,<2.0"
+
 COPY --chown=airflow:airflow ./scripts/docker/entrypoint.sh /entrypoint.sh
 
 USER ${AIRFLOW_USER}

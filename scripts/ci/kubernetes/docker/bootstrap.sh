@@ -28,3 +28,13 @@ if [ "$1" = "scheduler" ]
 then
 	exec airflow scheduler
 fi
+
+if [ "$1" = "worker" ]
+then
+	exec airflow worker
+fi
+
+if [ "$1" = "flower" ]
+then
+	exec airflow flower
+fi
