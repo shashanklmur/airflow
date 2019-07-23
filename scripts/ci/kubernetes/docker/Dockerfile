@@ -49,6 +49,7 @@ RUN pip install apache-airflow[celery,s3,redis,rabbitmq] && \
     pip install -U "flask==1.0.3" && \
     pip install -U "Werkzeug==0.14.1" && \
     pip install -U "Jinja2==2.10.0" && \
+    pip install -U "simple-salesforce==0.74.3" && \
     pip install -U "alembic>=1.0,<2.0"
 RUN mkdir -p /home/airflow/airflow
 COPY airflow-test-env-init.sh /tmp/airflow-test-env-init.sh

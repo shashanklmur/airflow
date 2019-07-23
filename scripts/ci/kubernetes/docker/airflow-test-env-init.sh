@@ -23,6 +23,7 @@ cd /usr/local/lib/python3.6/site-packages/airflow && \
 cp -R example_dags/* /home/airflow/airflow/dags/ && \
 cp -R contrib/example_dags/example_kubernetes_*.py /home/airflow/airflow/dags/ && \
 cp -a contrib/example_dags/libs /home/airflow/airflow/dags/ && \
+cp -R plugins/* /home/airflow/airflow/plugins/ && \
 airflow initdb && \
 alembic upgrade heads && \
 (airflow users --create --username airflow --lastname airflow --firstname jon --email airflow@apache.org --role Admin --password airflow || true) && \
