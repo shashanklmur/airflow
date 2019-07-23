@@ -16,6 +16,7 @@
 #  under the License.                                           *
 FROM python:3.6-slim
 # install deps
+ENV C_FORCE_ROOT="true"
 RUN apt-get update -y && apt-get install -y \
         wget \
         libczmq-dev \
