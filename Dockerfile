@@ -405,7 +405,9 @@ RUN if [[ -n "${ADDITIONAL_PYTHON_DEPS}" ]]; then \
 # RUN pip install apache-airflow[celery,s3,redis,rabbitmq] && \
 #     pip install -U "Werkzeug>=0.15" && \
 #     pip install -U "alembic>=1.0,<2.0"
-RUN pip install -U "simple-salesforce==0.74.3"
+RUN pip install -U "simple-salesforce==0.74.3" && \
+    pip install -U "tzlocal<2.0.0.0,>=1.5.0.0" && \
+    pip install -U "botocore"
 
 COPY --chown=airflow:airflow ./scripts/docker/entrypoint.sh /entrypoint.sh
 
