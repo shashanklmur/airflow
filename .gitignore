@@ -6,6 +6,11 @@ dbinit.py
 initdb.py
 secrets.py
 
+# Plugins
+scripts/ci/kubernetes/docker/plugins
+scripts/ci/kubernetes/airflow_blah
+airflow/plugins
+
 # Airflow sqlite databases
 airflow.db
 unittests.db

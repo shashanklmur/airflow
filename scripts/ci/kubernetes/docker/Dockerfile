@@ -30,10 +30,11 @@ RUN apt-get update -y && apt-get install -y \
         gcc \
         vim \
     && apt-get clean
+ENV C_FORCE_ROOT="true"
 RUN pip install --upgrade pip
 # install airflow
-COPY airflow.tar.gz /tmp/airflow.tar.gz
-RUN pip install --no-use-pep517 /tmp/airflow.tar.gz
+#COPY airflow.tar.gz /tmp/airflow.tar.gz
+#RUN pip install --no-use-pep517 /tmp/airflow.tar.gz
 # Since we install vanilla Airflow, we also want to have support for Postgres and Kubernetes
 RUN pip install -U setuptools && \
     pip install kubernetes && \
@@ -42,22 +43,25 @@ RUN pip install -U setuptools && \
     pip install celery~=4.3 && \
     # pip install flower>=0.7.3, <1.0 && \
     pip install librabbitmq>=1.6.1 && \
-    pip install boto3>=1.7.0, <1.8.0 && \
-    pip install redis~=3.2 && \
+#    pip install "boto3>=1.7.0,<1.8.0" && \
+#    pip install redis~=3.2 && \
     # pip install cassandra-driver>=3.13.0 && \
     pip install psycopg2-binary==2.7.4  # I had issues with older versions of psycopg2, just a warning
-RUN pip install apache-airflow[celery,s3,redis,rabbitmq] && \
+RUN pip install apache-airflow[celery,s3,redis,rabbitmq,salesforce] && \
     pip install -U "flask==1.0.3" && \
     pip install -U "Werkzeug==0.14.1" && \
     pip install -U "Jinja2==2.10.0" && \
-    pip install -U "simple-salesforce==0.74.3" && \
-    pip install -U "alembic>=1.0,<2.0" && \
-    pip install -U "simple-salesforce==0.74.3" && \
-    pip install -U "tzlocal<2.0.0.0,>=1.5.0.0" && \
-    pip install -U "botocore"
-
+#    pip install -U "simple-salesforce==0.74.3" && \
+    pip install -U "alembic<1.0,>=0.9" && \
+#    pip install -U "simple-salesforce==0.74.3" && \
+    pip install -U "pendulum==1.4.4" && \
+    pip install -U "tzlocal<2.0.0.0,>=1.5.0.0"
+#    pip install -U "botocore"
+RUN mkdir -p /usr/local/lib/python3.6/site-packages/airflow/plugins
+COPY plugins/ /usr/local/lib/python3.6/site-packages/airflow/plugins/
 RUN mkdir -p /home/airflow/airflow
 COPY airflow-test-env-init.sh /tmp/airflow-test-env-init.sh
 COPY bootstrap.sh /bootstrap.sh
 RUN chmod +x /bootstrap.sh
+EXPOSE 8080 5555 8793
 ENTRYPOINT ["/bootstrap.sh"]
